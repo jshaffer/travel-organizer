@@ -1,10 +1,11 @@
 "use strict";
 
-let config = require("./config");
+let config = require("./config"),
+    serveStatic = require("./staticFileServer"),
+    apiServer = require("./apiServer")();
 
-let http = require("http"),
-    express = require("express"),
-    app = express();
+const http = require("http"),
+    app = require("express")();
 
 app.startServer = function() {
     http.createServer(app).listen(config.port, function() {
@@ -12,27 +13,8 @@ app.startServer = function() {
     });
 };
 
-app.use("/js", express.static(config.jsFolder, {
-    setHeaders: function(res, filePath) {
-        res.setHeader("Content-Type", "text/javascript");
-        if (/.gz.js$/.test(filePath)) {
-            res.setHeader("Content-Encoding", "gzip");
-        }
-    }
-}));
-
-app.use("/css", express.static(config.cssFolder, {
-    setHeaders: function(res, filePath) {
-        res.setHeader("Content-Type", "text/css");
-        if (/.gz.css$/.test(filePath)) {
-            res.setHeader("Content-Encoding", "gzip");
-        }
-    }
-}));
-
-app.use("/", function(req, res) {
-    res.sendFile(config.indexFile);
-});
+app.use("/api", apiServer); //must precede serveStatic
+serveStatic.init(app, config);
 
 module.exports = {
     app: app
