@@ -1,0 +1,19 @@
+{
+  "name": "travel-organizer",
+  "version": "0.0.1",
+  "description": "Project folder for travel-organizer",
+  "main": "Gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jshaffer/travel-organizer.git"
+  },
+  "author": "Joel Shaffer, jshaffer",
+  "license": "",
+  "devDependencies": {
+    "grunt": "^1.0.0-rc1",
+    "grunt-contrib-watch": "^1.0.0",
+    "load-grunt-config": "^0.19.1",
+    "load-grunt-tasks": "^3.4.1",
+    "grunt-contrib-sass": "^1.0.0"
+  }
+}

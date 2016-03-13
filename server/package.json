@@ -1,0 +1,14 @@
+{
+  "name": "travel-organizer-server",
+  "version": "0.0.1",
+  "description": "Node.js project folder for travel-organizer",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jshaffer/travel-organizer.git"
+  },
+  "author": "Joel Shaffer, jshaffer",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
