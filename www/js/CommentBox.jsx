@@ -5,7 +5,6 @@ import React from "react"
 export default class CommentBox extends React.Component {
 
     loadCommentsFromServer () {
-        console.log("in loadCommentsFromServer");
         var self = this;
         $.ajax({
             url: self.props.url,
@@ -22,20 +21,15 @@ export default class CommentBox extends React.Component {
     }
 
     getInitialState() {
-        console.log("in getInitialState");
         return {data: []};
     }
 
     componentWillMount() {
-        console.log("in componentDidMount");
-
         this.loadCommentsFromServer();
-        setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+        setInterval(this.loadCommentsFromServer.bind(this), this.props.pollInterval);
     }
 
     render() {
-        console.log("in render");
-
         return (
             <div className="commentBox">
                 <h1>Comments</h1>
@@ -44,8 +38,6 @@ export default class CommentBox extends React.Component {
             </div>
         );
     }
-
-
 }
 
 class CommentList extends React.Component {
