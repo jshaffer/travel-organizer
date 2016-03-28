@@ -1,45 +1,56 @@
 "use strict";
 
-const React = require('react'),
-      ReactDOM = require('react-dom');
+import React from "react"
 
-//let data = require("./model");
+export default class CommentBox extends React.Component {
 
-let CommentBox = React.createClass({
-    loadCommentsFromServer: function() {
+    loadCommentsFromServer () {
+        console.log("in loadCommentsFromServer");
+        var self = this;
         $.ajax({
-            url: this.props.url,
+            url: self.props.url,
             dataType: 'json',
             cache: false,
-            success: function(data) {
+            success: function (data) {
+                console.log("in success");
                 this.setState({data: data});
             }.bind(this),
-            error: function(xhr, status, err) {
+            error: function (xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         });
-    },
-    getInitialState: function() {
+    }
+
+    getInitialState() {
+        console.log("in getInitialState");
         return {data: []};
-    },
-    componentDidMount: function() {
+    }
+
+    componentWillMount() {
+        console.log("in componentDidMount");
+
         this.loadCommentsFromServer();
         setInterval(this.loadCommentsFromServer, this.props.pollInterval);
-    },
-    render: function() {
+    }
+
+    render() {
+        console.log("in render");
+
         return (
             <div className="commentBox">
                 <h1>Comments</h1>
-                <CommentList data={this.state.data} />
+                <CommentList data={this.state.data}/>
                 <CommentForm />
             </div>
         );
     }
-});
 
-let CommentList = React.createClass({
-    render: function() {
-        var commentNodes = this.props.data.map(function(comment) {
+
+}
+
+class CommentList extends React.Component {
+    render() {
+        var commentNodes = this.props.data.map(function (comment) {
             return (
                 <Comment author={comment.author} key={comment.id}>
                     {comment.text}
@@ -52,22 +63,22 @@ let CommentList = React.createClass({
             </div>
         );
     }
-});
+}
 
-var CommentForm = React.createClass({
-    render: function() {
+class CommentForm extends React.Component {
+    render() {
         return (
             <form className="commentForm">
-                <input type="text" placeholder="Your name" />
-                <input type="text" placeholder="Say something..." />
-                <input type="submit" value="Post" />
+                <input type="text" placeholder="Your name"/>
+                <input type="text" placeholder="Say something..."/>
+                <input type="submit" value="Post"/>
             </form>
         );
     }
-});
+}
 
-let Comment = React.createClass({
-    render: function() {
+class Comment extends React.Component {
+    render() {
         return (
             <div className="comment">
                 <h2 className="commentAuthor">
@@ -77,9 +88,4 @@ let Comment = React.createClass({
             </div>
         );
     }
-});
-
-ReactDOM.render(
-    <CommentBox url="/api/comments" pollInterval={2000} />,
-    document.getElementById('content')
-);
+}
